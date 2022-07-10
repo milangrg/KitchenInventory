@@ -1,3 +1,30 @@
+# Kitchen Inventory Manager
+
+This React app has three purposes:
+1) Keep track of how much food is in stock.
+2) Keep track of what food is stored where.
+3) List what items to buy on the next grocery shopping trip.
+
+### `Zone Management`
+
+Food storage is organized into zones.
+
+### `Registering Food`
+
+Users need a way to add foods to the inventory manager. Food name, barcode number and unit etc.
+
+### `Food Search`
+
+Enable to user to search registered food.
+
+### `Quantity Management`
+
+Once users have found a food through food search, they need to be able to manage how much of the food is in each zone.
+
+### `Shopping List`
+
+List all the items that are running low, lesser the target threshold.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
