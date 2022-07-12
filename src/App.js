@@ -9,26 +9,26 @@ import QuantityManagement from './QuantityManagement';
 import ShoppingList from './ShoppingList';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
-class App extends React.Component {
+function App() {
 
-  render() {
-    return (
-      <Router>
-        <div className="App">
-          <Nav />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/zonemanagement" element={<ZoneManagement />} />
-            <Route path="/foodregister" element={<FoodRegister />} />
-            <Route path="/foodsearch" element={<FoodSearch />} />
-            <Route path="/quantitymanagement" element={<QuantityManagement/>} />
-            <Route path="/shoppinglist" element={<ShoppingList />} />
-          </Routes>
-        </div>
-      </Router>
-    );
-  }
-
+  return (
+    <Router>
+      <div className="App">
+        <Nav />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/zonemanagement" element={<ZoneManagement />} />
+          <Route path="/foodregister" element={<FoodRegister />} />
+          <Route path="/foodsearch" element={<FoodSearch />} />
+          <Route path="/quantitymanagement/:food" element={<QuantityManagement />} />
+          {/* <Route path="/foodsearch" element={<FoodSearch />}>
+            <Route path="quantitymanagement" element={<QuantityManagement />} />
+          </Route> */}
+          <Route path="/shoppinglist" element={<ShoppingList />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App;

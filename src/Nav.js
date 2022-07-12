@@ -12,22 +12,19 @@ function Nav() {
         <nav>
             {/* <h3>App</h3> */}
             <ul className="nav-links">
-                <Link sytle={navStyle} to="/">
+                <Link style={navStyle} to="/">
                     <li>Home</li>
                 </Link>
-                <Link sytle={navStyle} to="/zonemanagement">
+                <Link style={navStyle} to="/zonemanagement">
                     <li>Zone</li>
                 </Link>
-                <Link sytle={navStyle} to="/foodregister">
+                <Link style={navStyle} to="/foodregister">
                     <li>Register</li>
                 </Link>
-                <Link sytle={navStyle} to="/foodsearch">
+                <Link style={navStyle} to="/foodsearch">
                     <li>Search</li>
                 </Link>
-                <Link sytle={navStyle} to="/quantitymanagement">
-                    <li>Quantity</li>
-                </Link>
-                <Link sytle={navStyle} to="/shoppinglist">
+                <Link style={navStyle} to="/shoppinglist">
                     <li>List</li>
                 </Link>
             </ul>

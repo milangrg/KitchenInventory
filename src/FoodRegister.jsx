@@ -1,96 +1,116 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Food from './Food'
 
-// 1. class creation - does not call render() yet
-// 2. mounting - initial render()
-// 3. setState() - triggers render()
-// 4. props changed - triggers render()
-// 5. unmounting - removes elements created by render()
+const LOCAL_STORAGE_FOOD_KEY = 'foodlist'
 
-const LOCAL_STORAGE_FOOD_KEY = 'foods'
+function FoodRegister() {
 
-class FoodRegister extends React.PureComponent {
+  const [barcode, setBarcode] = useState('')
+  const [foodname, setFoodname] = useState('')
+  const [units, setUnits] = useState('')
+  const [minquantity, setMinquantity] = useState('')
+  const [foodlist, setFoodlist] = useState([])
 
-  // state = {
-  //   foods: [{foodName: 'Cooking oil', barcode: 123123123, unit: 'ml', minQty: 500},
-  //     {foodName: 'Sardines', barcode: 5656565, unit: 'forEach', minQty: 2},
-  //   ]
-  // }
+  const addFood = event => {
+    const newfood = {barcode: barcode, foodname: foodname, units: units, minquantity: minquantity}
+    setFoodlist(foodlist.concat(newfood))
 
-  state = {
-    foods: [
-      'Chocolate chip cookie',
-      'Cranberry orange scone',
-      'Salmon',
-      'Broccoli',
-      'Soy sauce',
-      'Char Kway teow',
-      'Rice'
-    ]
+    setBarcode('')
+    setFoodname('')
+    setUnits('')
+    setMinquantity('')
+    event.preventDefault()
   }
 
-  componentDidMount() {
-    console.log('did mount')
-    this.setState({
-      foods: JSON.parse(localStorage.getItem(LOCAL_STORAGE_FOOD_KEY))
-    })
+  const clearInputs = () => {
+    setBarcode('')
+    setFoodname('')
+    setUnits('')
+    setMinquantity('')
   }
 
-  componentWillUnmount() {
-    console.log('will unmount')
+  useEffect( () => {
+    // setFoodlist(JSON.parse(localStorage.getItem(LOCAL_STORAGE_FOOD_KEY)))
+    const data = localStorage.getItem(LOCAL_STORAGE_FOOD_KEY)
+    if (data) {
+      setFoodlist(JSON.parse(data))
+    }
+    console.log('First load: ', foodlist)
+  }, [])
+
+  useEffect( () => {
+    console.log('Updated: ', foodlist)
+    localStorage.setItem(LOCAL_STORAGE_FOOD_KEY, JSON.stringify(foodlist))
+  }, [foodlist])
+
+  function checkBarcode(inputBarcode) {
+    let found = false;
+    for (let i = 0; i < foodlist.length; i++) {
+      if (foodlist[i].barcode === inputBarcode) {
+        found = true;
+        break;
+      }
+    }
+    return found
   }
 
-  addItem = () => {
-    const newFoods = [...this.state.foods, this.state.newItemName]
-    this.setState({
-      foods: newFoods,
-      newItemName: ''
-    })
-    localStorage.setItem(LOCAL_STORAGE_FOOD_KEY, JSON.stringify(newFoods))
-  }
-
-  newItemNameChanged = event => {
-    this.setState({
-      newItemName: event.target.value
-    })
-  }
-
-  setItemName = (newName, index) => {
-    const foodsCopy = [...this.state.foods]
-    foodsCopy.splice(index, 1, newName)
-    this.setState({
-      foods: foodsCopy
-    })
-    localStorage.setItem(LOCAL_STORAGE_FOOD_KEY, JSON.stringify(foodsCopy))
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>Food Registration Page</h1>
-        {
-          this.state.foods.map((foodName, index) => 
-            <Food 
-              key={index}
-              // key={value} 
-              foodName={foodName}
-              index={index}
-              setItemName={this.setItemName} />
-          )
-        }
-        <label>
-          New food:
-          <input 
-            type="text" 
-            onChange={this.newItemNameChanged}
-            value={this.state.newItemName}
+  return (
+    <div>
+      <h1>Food Registration Page</h1>
+      <form>
+        <div>
+          <label>Bar Code: </label>
+          <input
+            type='number'
+            required
+            value={barcode}
+            onChange={(e) => setBarcode(e.target.value)}
           />
-        </label>
-        <button onClick={this.addItem}>Add</button>
-      </div>
-    );
-  }
+        </div>
+        <div>
+          <label>Food Name: </label>
+          <input
+            type='text'
+            required
+            value={foodname}
+            onChange={(e) => setFoodname(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Units: </label>
+          <select
+          value={units}
+          onChange={(e) => setUnits(e.target.value)}
+          >
+            <option value=''></option>
+            <option value='each'>Each</option>
+            <option value='grams'>Grams</option>
+            <option value='kilograms'>Kilograms</option>
+            <option value='milliliters'>Milliliters</option>
+            <option value='liters'>Liters</option>
+            <option value='ounces'>Ounces</option>
+            <option value='pounds'>Pounds</option>
+          </select>
+        </div>
+        <div>
+          <label>Restock Qty: </label>
+          <input
+            type='number'
+            value={minquantity}
+            onChange={(e) => setMinquantity(e.target.value)}
+          />
+          </div>
+        <div>
+          <button disabled={!barcode || !foodname || !units || checkBarcode(barcode)} onClick={addFood}>Register</button>
+          <button onClick={clearInputs}>Cancel</button>
+        </div>
+        <div style={{color: 'red'}}>
+          {checkBarcode(barcode)? 'Error: Bar Code # already exists!': ''}
+        </div>
+      </form>
+    </div>
+  )
 }
 
 export default FoodRegister;
