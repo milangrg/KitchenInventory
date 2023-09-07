@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/KitchenInventory/static/css/main.74579f3d.css",
+    "main.js": "/KitchenInventory/static/js/main.a9d0e432.js",
+    "static/js/787.bc2c2d3d.chunk.js": "/KitchenInventory/static/js/787.bc2c2d3d.chunk.js",
+    "index.html": "/KitchenInventory/index.html",
+    "main.74579f3d.css.map": "/KitchenInventory/static/css/main.74579f3d.css.map",
+    "main.a9d0e432.js.map": "/KitchenInventory/static/js/main.a9d0e432.js.map",
+    "787.bc2c2d3d.chunk.js.map": "/KitchenInventory/static/js/787.bc2c2d3d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.74579f3d.css",
+    "static/js/main.a9d0e432.js"
+  ]
+}
